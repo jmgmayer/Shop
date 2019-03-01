@@ -10,13 +10,13 @@
     public class SeedDB
     {
         private readonly DataContext context;
-        private readonly IUserHelper userHelper;
+        private readonly UserManager<User> userManager;
         private Random random;
 
-        public SeedDB(DataContext context, IUserHelper userHelper)
+        public SeedDB(DataContext context, UserManager<User> userManager)
         {
             this.context = context;
-            this.userHelper = userHelper;
+            this.userManager = userManager;
             this.random = new Random();
         }
 
@@ -24,7 +24,7 @@
         {
             await this.context.Database.EnsureCreatedAsync();
 
-            var user = await this.userHelper.GetUserByEmailAsync("juan.manuel.gutierrezm@pemex.com");
+            var user = await this.userManager.FindByEmailAsync("juan.manuel.gutierrezm@pemex.com");
             if (user == null)
             {
                 user = new User
@@ -36,7 +36,7 @@
                     PhoneNumber="38633"
                 };
 
-                var result = await this.userHelper.AddUserAsync(user, "P3m3x&2019");
+                var result = await this.userManager.CreateAsync(user, "P3m3x&2019");
                 if (result != IdentityResult.Success)
                 {
                     throw new InvalidOperationException("Could not create the user in seeder");

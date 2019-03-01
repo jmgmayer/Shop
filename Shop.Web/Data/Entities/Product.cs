@@ -33,5 +33,18 @@
 
         public User User { get; set; }
 
+        public string ImagenFullPath
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(this.ImageUrl))
+                {
+                    return null;
+                }
+
+                return $"https://shoppruebas.azurewebsites.net{this.ImageUrl.Substring(1)}";
+            }
+        }
+
     }
 }

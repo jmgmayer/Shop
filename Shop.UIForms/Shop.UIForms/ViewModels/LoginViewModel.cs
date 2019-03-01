@@ -15,7 +15,7 @@
 
         public LoginViewModel()
         {
-            this.Email = "rufus170608@gmail.com";
+            this.Email = "juan.manuel.gutierrezm@pemex.com";
             this.Password = "rufus170608.";
         }
 
@@ -31,7 +31,7 @@
                 await Application.Current.MainPage.DisplayAlert("Error","You must enter a Password","Accept");
                 return;
             }
-            if (!this.Email.Equals("rufus170608@gmail.com") || !this.Password.Equals("rufus170608."))
+            if (!this.Email.Equals("juan.manuel.gutierrezm@pemex.com") || !this.Password.Equals("rufus170608."))
             {
                 await Application.Current.MainPage.DisplayAlert("Error","User or password wrong","Accept");
             }
