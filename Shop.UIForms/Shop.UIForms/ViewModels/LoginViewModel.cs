@@ -1,6 +1,7 @@
 ﻿namespace Shop.UIForms.ViewModels
 {
     using GalaSoft.MvvmLight.Command;
+    using Shop.UIForms.Views;
     using System;
     using System.Collections.Generic;
     using System.Text;
@@ -36,7 +37,11 @@
                 await Application.Current.MainPage.DisplayAlert("Error","User or password wrong","Accept");
             }
 
-            await Application.Current.MainPage.DisplayAlert("Ok", "You have logged in to the application", "Accept");
+            //await Application.Current.MainPage.DisplayAlert("Ok", "You have logged in to the application", "Accept");
+
+            MainViewModel.GetInstance().Products = new ProductsViewModel();
+
+            await Application.Current.MainPage.Navigation.PushAsync(new ProductsPage());
         }
     }
 }
