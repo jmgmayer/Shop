@@ -35,6 +35,11 @@
         public User User { get; set; }
 
         [JsonProperty("imagenFullPath")]
-        public Uri ImagenFullPath { get; set; }
+        public Uri ImageFullPath { get; set; }
+
+        public override string ToString()
+        {
+            return $"{this.Name} {this.Price:C2}";
+        }
     }
 }

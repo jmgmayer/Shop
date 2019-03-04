@@ -12,6 +12,7 @@
     {
         private ApiService apiService;
         private ObservableCollection<Product> products;
+        private bool isRefreshing;
 
         public ObservableCollection<Product> Products
         {
@@ -25,9 +26,19 @@
             this.LoadProducts();
         }
 
+        public bool IsRefreshing
+        {
+            get => this.isRefreshing;
+            set { this.SetValue(ref this.isRefreshing, value); }
+        }
+
         private async void LoadProducts()
         {
+            this.IsRefreshing = true;
+
             var response = await this.apiService.GetListAsync<Product>("https://shoppruebas.azurewebsites.net", "/api", "/Products");
+
+            this.IsRefreshing = false;
 
             if (!response.IsSuccess)
             {
@@ -37,7 +48,6 @@
 
             var myProducts = (List<Product>)response.Result;
             this.Products = new ObservableCollection<Product>(myProducts);
-
         }
     }
 }
