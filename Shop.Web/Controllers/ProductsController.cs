@@ -12,7 +12,9 @@
     using Microsoft.EntityFrameworkCore;
     using Shop.Web.Models;
     using System.IO;
+    using Microsoft.AspNetCore.Authorization;
 
+    [Authorize]
     public class ProductsController : Controller
     {
         private readonly IProductRepository productRepository;
@@ -79,7 +81,7 @@
 
                 var product = this.ToProduct(view, path);
                 //TODO: Change for the logged user
-                product.User = await this.userHelper.GetUserByEmailAsync("juan.manuel.gutierrezm@pemex.com");
+                product.User = await this.userHelper.GetUserByEmailAsync(this.User.Identity.Name);
                 await this.productRepository.CreateAsync(product);
                 return RedirectToAction(nameof(Index));
             }
@@ -164,7 +166,7 @@
                     var product = this.ToProduct(view, path);
 
                     //TODO: Change for the logged user
-                    product.User = await this.userHelper.GetUserByEmailAsync("juan.manuel.gutierrezm@pemex.com");                    
+                    product.User = await this.userHelper.GetUserByEmailAsync(this.User.Identity.Name);                    
                     await this.productRepository.UpdateAsync(product);
                 }
                 catch (DbUpdateConcurrencyException)
