@@ -12,7 +12,9 @@
     using Microsoft.EntityFrameworkCore;
     using Shop.Web.Models;
     using System.IO;
+    using Microsoft.AspNetCore.Authorization;
 
+    [Authorize]
     public class ProductsController : Controller
     {
         private readonly IProductRepository productRepository;

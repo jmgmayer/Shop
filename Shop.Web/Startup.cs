@@ -33,12 +33,11 @@
             services.AddIdentity<User, IdentityRole>(cfg =>
             {
                 cfg.User.RequireUniqueEmail = true;
-                cfg.Password.RequireDigit = true;
-                cfg.Password.RequiredUniqueChars = 1;
+                cfg.Password.RequireDigit = false;
+                cfg.Password.RequiredUniqueChars = 0;
                 cfg.Password.RequireLowercase = false;
                 cfg.Password.RequireNonAlphanumeric = false;
-                cfg.Password.RequireUppercase = true;
-                cfg.Password.RequiredLength = 8;
+                cfg.Password.RequireUppercase = false;
             })
                     .AddEntityFrameworkStores<DataContext>();
 
