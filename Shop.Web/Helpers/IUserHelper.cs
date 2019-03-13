@@ -23,5 +23,10 @@
 
         Task<SignInResult> ValidatePasswordAsync(User user, string password);
 
+        Task CheckRoleAsync(string roleName);
+
+        Task AddUsertoRoleAsync(User user, string roleName);
+
+        Task<bool> IsUserInRoleAsync(User user, string roleName);
     }
 }

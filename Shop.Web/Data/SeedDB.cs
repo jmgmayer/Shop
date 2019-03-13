@@ -10,13 +10,14 @@
     public class SeedDB
     {
         private readonly DataContext context;
+        private readonly IUserHelper userHelper;
         private readonly UserManager<User> userManager;
         private Random random;
 
-        public SeedDB(DataContext context, UserManager<User> userManager)
+        public SeedDB(DataContext context, IUserHelper userHelper)
         {
             this.context = context;
-            this.userManager = userManager;
+            this.userHelper = userHelper;            
             this.random = new Random();
         }
 
@@ -24,7 +25,10 @@
         {
             await this.context.Database.EnsureCreatedAsync();
 
-            var user = await this.userManager.FindByEmailAsync("juan.manuel.gutierrezm@pemex.com");
+            await this.userHelper.CheckRoleAsync("Admin");
+            await this.userHelper.CheckRoleAsync("Customer");
+
+            var user = await this.userHelper.GetUserByEmailAsync("juan.manuel.gutierrezm@pemex.com");
             if (user == null)
             {
                 user = new User
@@ -41,7 +45,12 @@
                 {
                     throw new InvalidOperationException("Could not create the user in seeder");
                 }
+
+                await this.userHelper.AddUsertoRoleAsync(user, "Admin");
             }
+
+            var isInRole = await this.userHelper.IsUserInRoleAsync(user, "Admin");
+
 
             if (!this.context.Products.Any())
             {
