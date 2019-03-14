@@ -40,7 +40,7 @@
                     PhoneNumber="38633"
                 };
 
-                var result = await this.userManager.CreateAsync(user, "P3m3x&2019");
+                var result = await this.userHelper.AddUserAsync(user, "P3m3x&2019");
                 if (result != IdentityResult.Success)
                 {
                     throw new InvalidOperationException("Could not create the user in seeder");
@@ -50,6 +50,11 @@
             }
 
             var isInRole = await this.userHelper.IsUserInRoleAsync(user, "Admin");
+
+            if (!isInRole)
+            {
+                await this.userHelper.AddUsertoRoleAsync(user, "Admin");
+            }
 
 
             if (!this.context.Products.Any())
